@@ -3,13 +3,6 @@
 
 namespace ThreadLib
 {
-	typedef struct 
-	{
-		void* pfnCallback;
-		void* pClass;
-		void* param;
-	}ThreadInfo;
-
 	class THREADLIB_API Thread
 	{
 	public:
