@@ -9,7 +9,6 @@ namespace ThreadLib
 		Thread(DWORD pfnCallback, DWORD pClassBase, DWORD pParam);
 		~Thread();
 
-		void Start();
 		void Join();
 
 	private:

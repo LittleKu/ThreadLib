@@ -24,11 +24,6 @@ namespace ThreadLib
 	{
 	}
 
-	void Thread::Start()
-	{
-		
-	}
-
 	void Thread::Join()
 	{
 		::WaitForSingleObject(m_hThread, INFINITE);
