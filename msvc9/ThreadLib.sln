@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ThreadLib", "ThreadLib.vcproj", "{34B8A6E2-673A-4512-9E14-F04B86C75B2E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{34B8A6E2-673A-4512-9E14-F04B86C75B2E}.Debug|Win32.ActiveCfg = Release|Win32
+		{34B8A6E2-673A-4512-9E14-F04B86C75B2E}.Debug|Win32.Build.0 = Release|Win32
+		{34B8A6E2-673A-4512-9E14-F04B86C75B2E}.Release|Win32.ActiveCfg = Release|Win32
+		{34B8A6E2-673A-4512-9E14-F04B86C75B2E}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
