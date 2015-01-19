@@ -14,7 +14,11 @@ public:
 
 	~CTest()
 	{
-		
+		if (m_Thread != NULL)
+		{
+			delete m_Thread;
+			m_Thread = NULL;
+		}
 	}
 
 	void *ThreadFunc(void* param)
