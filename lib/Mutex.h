@@ -1,6 +1,10 @@
 #ifndef __MUTEX_H__
 #define __MUTEX_H__
 
+#ifdef _WIN32
+#pragma once
+#endif
+
 namespace ThreadLib
 {
 	class THREADLIB_API Mutex

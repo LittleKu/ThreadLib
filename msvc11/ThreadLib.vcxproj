@@ -94,19 +94,25 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\lib\Event.cpp" />
+    <ClCompile Include="..\lib\MemPool.cpp" />
     <ClCompile Include="..\lib\Mutex.cpp" />
     <ClCompile Include="..\lib\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\lib\Task.cpp" />
     <ClCompile Include="..\lib\Thread.cpp" />
     <ClCompile Include="..\lib\MemberAddr.cpp" />
+    <ClCompile Include="..\lib\ThreadPool.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\lib\Event.h" />
+    <ClInclude Include="..\lib\MemPool.h" />
     <ClInclude Include="..\lib\Mutex.h" />
     <ClInclude Include="..\lib\stdafx.h" />
+    <ClInclude Include="..\lib\Task.h" />
     <ClInclude Include="..\lib\Thread.h" />
+    <ClInclude Include="..\lib\ThreadPool.h" />
     <ClInclude Include="..\ThreadLib.h" />
     <ClInclude Include="..\lib\MemberAddr.h" />
   </ItemGroup>

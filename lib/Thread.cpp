@@ -2,26 +2,63 @@
 //
 
 #include "stdafx.h"
-#include "Event.h"
 #include "Thread.h"
+
 
 namespace ThreadLib
 {
-	Thread::Thread(DWORD pfnCallback, DWORD pClassBase, DWORD pParam)
-		:m_hThread(NULL)
+	Thread::Thread()
+		:m_bIsRun(false)
+		,m_hThread(NULL)
 	{
-		m_pfnCallback = pfnCallback;
-		m_pClassBase = pClassBase;
-		m_pParam = pParam;
-
-		DWORD dwThreadID;
-
-		m_hThread = (HANDLE)::_beginthreadex(NULL, 0, &Thread::_ThreadProc, this, 0, (unsigned int*)&dwThreadID);
-		assert(m_hThread);
 	}
 
 	Thread::~Thread()
 	{
+		Stop();
+	}
+
+	bool Thread::Run(DWORD pfn, DWORD pClaseBase, DWORD pParam)
+	{
+		if (m_bIsRun)
+			return false;
+		m_task.PushTask(pfn, pClaseBase, pParam);
+
+		assert(m_hThread == NULL);
+		m_hThread = (HANDLE)::_beginthreadex(NULL, 0, &Thread::ThreadProc, (void*)this, 0, (unsigned int*)&m_dwThreadID);
+		if (m_hThread != NULL)
+			m_bIsRun = true;
+
+		return m_bIsRun;
+	}
+
+	bool Thread::Run(DWORD pfn, DWORD pParam)
+	{
+		if (m_bIsRun)
+			return false;
+
+		m_task.PushTask(pfn, pParam);
+
+		assert(m_hThread == NULL);
+		m_hThread = (HANDLE)::_beginthreadex(NULL, 0, &Thread::ThreadProc, (void*)this, 0, (unsigned int*)&m_dwThreadID);
+		if (m_hThread != NULL)
+			m_bIsRun = true;
+
+		return m_bIsRun;
+	}
+
+	void Thread::Stop(DWORD lMillSeconds)
+	{
+		if (m_hThread == NULL)
+			return;
+
+		if (::WaitForSingleObject(m_hThread, lMillSeconds) != WAIT_OBJECT_0)
+		{
+			::TerminateThread(m_hThread, 0L);
+		}
+		::CloseHandle(m_hThread);
+		m_hThread = NULL;
+		m_bIsRun = false;
 	}
 
 	void Thread::Join()
@@ -29,17 +66,21 @@ namespace ThreadLib
 		::WaitForSingleObject(m_hThread, INFINITE);
 	}
 
-	unsigned int Thread::_ThreadProc(void *param)
+	DWORD Thread::GetThreadID()
 	{
-		Thread *pThis = (Thread*)param;
-		if (pThis->m_pClassBase != NULL)
-		{
-			reinterpret_cast<void *(__fastcall *)(void*, int, void*)>(pThis->m_pfnCallback)((void*)pThis->m_pClassBase, 0, (void*)pThis->m_pParam);
-		}
-		else
-		{
-			reinterpret_cast<void *(*)(void*)>(pThis->m_pfnCallback)((void*)pThis->m_pParam);
-		}
+		return m_dwThreadID;
+	}
+
+	unsigned int Thread::ThreadProc(void* pParam)
+	{
+		Thread *pThis = (Thread*)pParam;
+
+		void *pRet = NULL;
+
+		pRet = pThis->m_task.ExecuteTask();
+		
+		pThis->m_bIsRun = false;
+
 		return 0;
 	}
 }

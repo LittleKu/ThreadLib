@@ -1,24 +1,33 @@
 #ifndef __THREAD_H__
 #define __THREAD_H__
 
+#ifdef _WIN32
+#pragma once
+#endif
+
 namespace ThreadLib
 {
 	class THREADLIB_API Thread
 	{
 	public:
-		Thread(DWORD pfnCallback, DWORD pClassBase, DWORD pParam);
-		~Thread();
+		Thread();
+		virtual ~Thread();
 
+	public:
+		bool Run(DWORD pfn, DWORD pClassBase, DWORD pParam);
+		bool Run(DWORD pfn, DWORD pParam);
+
+		void Stop(DWORD lMillSeconds = 0);
 		void Join();
+		DWORD GetThreadID();
 
-	private:
-		static unsigned int __stdcall _ThreadProc(void *param);
+	protected:
+		static unsigned int __stdcall ThreadProc(void *pParam);
 
-	private:
+		DWORD m_dwThreadID;
+		Task m_task;
+		bool m_bIsRun;
 		HANDLE m_hThread;
-		DWORD m_pfnCallback;
-		DWORD m_pClassBase;
-		DWORD m_pParam;
 	};
 }
 #endif
