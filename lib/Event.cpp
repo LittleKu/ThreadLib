@@ -6,7 +6,7 @@ namespace ThreadLib
 	Event::Event()
 		:m_hEvent(NULL)
 	{
-		m_hEvent = ::CreateEvent(NULL, FALSE, FALSE, NULL);/**< 自动回复状态,初始状态为无信号*/
+		m_hEvent = ::CreateEvent(NULL, FALSE, FALSE, NULL);/**< 线程结束后自动回复状态,初始状态为无信号*/
 		assert(m_hEvent);
 	}
 

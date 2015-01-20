@@ -61,7 +61,7 @@ namespace ThreadLib
 
 	void MemoryPool::AddNewBlob(void)
 	{
-		int sizeMultiplier = pow(2.0, m_numBlobs);
+		int sizeMultiplier = (int)pow(2.0, m_numBlobs);
 		int nElements = m_blocksPerBlob * sizeMultiplier;
 		int blobSize = nElements * m_blockSize;
 

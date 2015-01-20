@@ -10,7 +10,8 @@
 #include <stdio.h>
 #include <tchar.h>
 #include <assert.h>
-
+#include <map>
+#include <vector>
 #include "..\ThreadLib.h"
 
 #pragma comment(lib, "ThreadLib.lib")

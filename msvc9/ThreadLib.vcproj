@@ -18,8 +18,8 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
-			IntermediateDirectory="$(ConfigurationName)"
+			OutputDirectory=".\Debug"
+			IntermediateDirectory=".\Debug"
 			ConfigurationType="2"
 			CharacterSet="2"
 			>
@@ -47,8 +47,12 @@
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
 				UsePrecompiledHeader="2"
+				AssemblerListingLocation=".\Debug/"
+				ObjectFile=".\Debug/"
+				ProgramDataBaseFileName=".\Debug/"
 				WarningLevel="3"
 				DebugInformationFormat="4"
+				DisableSpecificWarnings="4251"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -61,10 +65,12 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				OutputFile=".\Debug/$(ProjectName).dll"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
-				SubSystem="2"
-				ResourceOnlyDLL="true"
+				SubSystem="0"
+				ResourceOnlyDLL="false"
+				ImportLibrary=".\Debug/$(TargetName).lib"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -91,8 +97,8 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
-			IntermediateDirectory="$(ConfigurationName)"
+			OutputDirectory=".\Release"
+			IntermediateDirectory=".\Release"
 			ConfigurationType="2"
 			CharacterSet="2"
 			WholeProgramOptimization="0"
@@ -122,8 +128,12 @@
 				RuntimeLibrary="0"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="2"
+				AssemblerListingLocation=".\Release/"
+				ObjectFile=".\Release/"
+				ProgramDataBaseFileName=".\Release/"
 				WarningLevel="3"
 				DebugInformationFormat="3"
+				DisableSpecificWarnings="4251"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -136,6 +146,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				OutputFile=".\Release/$(ProjectName).dll"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
 				SubSystem="2"
@@ -183,11 +194,23 @@
 				>
 			</File>
 			<File
+				RelativePath="..\lib\MemPool.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\lib\Mutex.cpp"
 				>
 			</File>
 			<File
+				RelativePath="..\lib\Task.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\lib\Thread.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\lib\ThreadPool.cpp"
 				>
 			</File>
 		</Filter>
@@ -205,11 +228,23 @@
 				>
 			</File>
 			<File
+				RelativePath="..\lib\MemPool.h"
+				>
+			</File>
+			<File
 				RelativePath="..\lib\Mutex.h"
 				>
 			</File>
 			<File
+				RelativePath="..\lib\Task.h"
+				>
+			</File>
+			<File
 				RelativePath="..\lib\Thread.h"
+				>
+			</File>
+			<File
+				RelativePath="..\lib\ThreadPool.h"
 				>
 			</File>
 		</Filter>
