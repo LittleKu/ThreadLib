@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="9.00"
 	Name="ThreadLib"
-	ProjectGUID="{34B8A6E2-673A-4512-9E14-F04B86C75B2E}"
+	ProjectGUID="{5E6B0083-07C6-47FF-A147-241B4037087C}"
 	RootNamespace="ThreadLib"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
@@ -41,15 +41,12 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\;..\lib"
+				AdditionalIncludeDirectories=".\;..\"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;THREADLIB_EXPORTS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
 				UsePrecompiledHeader="2"
-				AssemblerListingLocation=".\Debug/"
-				ObjectFile=".\Debug/"
-				ProgramDataBaseFileName=".\Debug/"
 				WarningLevel="3"
 				DebugInformationFormat="4"
 				DisableSpecificWarnings="4251"
@@ -65,12 +62,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile=".\Debug/$(ProjectName).dll"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
-				SubSystem="0"
-				ResourceOnlyDLL="false"
-				ImportLibrary=".\Debug/$(TargetName).lib"
+				SubSystem="2"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -121,19 +115,14 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="2"
-				InlineFunctionExpansion="1"
-				EnableIntrinsicFunctions="false"
-				AdditionalIncludeDirectories="..\;..\lib"
+				EnableIntrinsicFunctions="true"
+				AdditionalIncludeDirectories=".\;..\"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;THREADLIB_EXPORTS"
 				RuntimeLibrary="0"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="2"
-				AssemblerListingLocation=".\Release/"
-				ObjectFile=".\Release/"
-				ProgramDataBaseFileName=".\Release/"
 				WarningLevel="3"
 				DebugInformationFormat="3"
-				DisableSpecificWarnings="4251"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -146,7 +135,6 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile=".\Release/$(ProjectName).dll"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
 				SubSystem="2"
@@ -181,36 +169,36 @@
 	</References>
 	<Files>
 		<Filter
-			Name="Source Files"
+			Name="Library File"
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\lib\Event.cpp"
+				RelativePath="..\lib\stdafx.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\lib\stdafx.h"
 				>
 			</File>
 			<File
-				RelativePath="..\lib\MemberAddr.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\lib\MemPool.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\lib\Mutex.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\lib\Task.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\lib\Thread.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\lib\ThreadPool.cpp"
+				RelativePath="..\ThreadLib.h"
 				>
 			</File>
 		</Filter>
@@ -249,40 +237,36 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="资源文件"
+			Name="Source Files"
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
-		</Filter>
-		<Filter
-			Name="Project"
-			>
 			<File
-				RelativePath="..\lib\stdafx.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\lib\stdafx.h"
+				RelativePath="..\lib\Event.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\ThreadLib.h"
+				RelativePath="..\lib\MemberAddr.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\lib\MemPool.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\lib\Mutex.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\lib\Task.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\lib\Thread.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\lib\ThreadPool.cpp"
 				>
 			</File>
 		</Filter>

@@ -35,7 +35,7 @@ namespace ThreadLib
 
 		if (m_pClassBase != NULL)
 		{
-			return reinterpret_cast<void *(__fastcall *)(void */*ecx*/, int/*edx*/, void*)>(m_pfn)((void*)m_pClassBase, 0, (void*)m_pParam);
+			return reinterpret_cast<void *(__fastcall *)(void *, int, void*)>(m_pfn)((void*)m_pClassBase, 0, (void*)m_pParam);
 		}
 		else
 		{
