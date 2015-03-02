@@ -1,13 +1,15 @@
 #ifndef __MUTEX_H__
 #define __MUTEX_H__
 
-#ifdef _WIN32
-#pragma once
+#ifdef WIN32
+#include <windows.h>
+#else
+#include <pthread.h>
 #endif
 
 namespace ThreadLib
 {
-	class THREADLIB_API Mutex
+	class Mutex
 	{
 	public:
 		Mutex();
@@ -17,10 +19,14 @@ namespace ThreadLib
 		void Unlock();
 
 	private:
-		CRITICAL_SECTION m_cs;
+#ifdef WIN32
+		CRITICAL_SECTION m_Mutex;
+#else
+		pthread_mutex_t m_Mutex;
+#endif
 	};
 
-	class THREADLIB_API AutoLock
+	class AutoLock
 	{
 	public:
 		AutoLock(Mutex *pMutex);
@@ -33,4 +39,5 @@ namespace ThreadLib
 		bool m_bIsLock;
 	};
 }
+
 #endif

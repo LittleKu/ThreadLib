@@ -1,8 +1,18 @@
-#ifndef __THREADPOOL_H__
-#define __THREADPOOL_H__
+#ifndef __THREAD_POOL_H__
+#define __THREAD_POOL_H__
+
+#include <vector>
+#include <map>
+
+#include "Thread.h"
+#include "Mutex.h"
+#include "Event.h"
+
+#include <stddef.h>
 
 namespace ThreadLib
 {
+	class MemPool;
 
 	typedef struct THREAD_CONTEXT
 	{
@@ -14,7 +24,7 @@ namespace ThreadLib
 	typedef std::map<DWORD,THREAD_CONTEXT*> ThreadMaps;
 	typedef std::vector<Task*> TaskVec;
 
-	class THREADLIB_API ThreadPool
+	class ThreadPool
 	{
 	public:
 		ThreadPool();
@@ -55,9 +65,9 @@ namespace ThreadLib
 		Task* PullTask();
 
 	protected:
-		MemoryPool* m_pTaskPool;
+		MemPool* m_pTaskPool;
 		Mutex m_taskPoolMutex;
-		MemoryPool* m_pContextPool;
+		MemPool* m_pContextPool;
 		Mutex m_contextPoolMutex;
 
 		unsigned short m_nMinThreadNum;

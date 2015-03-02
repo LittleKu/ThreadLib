@@ -1,5 +1,8 @@
-#include "stdafx.h"
+#include <assert.h>
+
 #include "ThreadPool.h"
+#include "MemPool.h"
+#include "CodeAddress.h"
 
 namespace ThreadLib
 {
@@ -7,7 +10,7 @@ namespace ThreadLib
 		:m_nMinThreadNum(0)
 		,m_nThreadNum(0)
 	{
-		m_pTaskPool = new MemoryPool(sizeof(Task), 100);
+		m_pTaskPool = new MemPool(sizeof(Task), 100);
 		m_pContextPool = NULL;
 	}
 
@@ -30,7 +33,7 @@ namespace ThreadLib
 	bool ThreadPool::Start(int nMinThreadNum)
 	{
 		m_nMinThreadNum = nMinThreadNum;
-		m_pContextPool = new MemoryPool(sizeof(THREAD_CONTEXT), 50);
+		m_pContextPool = new MemPool(sizeof(THREAD_CONTEXT), 50);
 		return CreateThread(m_nMinThreadNum);
 	}
 
@@ -49,17 +52,17 @@ namespace ThreadLib
 			pContext = CreateContext();
 			pContext->bIdle = true;
 			pContext->bRun = true;
-			pContext->thread.Run((DWORD)GetClassFuncAddr(&ThreadPool::ThreadFunc), (DWORD)this, (DWORD)pContext);
+			pContext->thread.Run((DWORD)GET_MEMBER_CALLBACK(ThreadPool,ThreadFunc), (DWORD)this, (DWORD)pContext);
 			m_threads.insert(ThreadMaps::value_type(pContext->thread.GetThreadID(), pContext));
 		}
 		m_nThreadNum += nNum;
 		return true;
 	}
-	
+
 	THREAD_CONTEXT *ThreadPool::CreateContext()
 	{
 		AutoLock l(&m_contextPoolMutex);
-		THREAD_CONTEXT *pContext = new (m_pContextPool->Alloc(sizeof(THREAD_CONTEXT)))THREAD_CONTEXT;
+		THREAD_CONTEXT *pContext = new (m_pContextPool->Alloc())THREAD_CONTEXT;
 		return pContext;
 	}
 
@@ -110,7 +113,7 @@ namespace ThreadLib
 	Task *ThreadPool::CreateTask()
 	{
 		AutoLock l(&m_taskPoolMutex);
-		Task *pTask = new (m_pTaskPool->Alloc(sizeof(Task)))Task;
+		Task *pTask = new (m_pTaskPool->Alloc())Task;
 
 		return pTask;
 	}
@@ -174,7 +177,7 @@ namespace ThreadLib
 			if (!pContext->bRun)/**< 要求当前线程停止工作*/
 				break;
 
-			if (!m_EventNewTask.Wait())/**< 没有新任务信号*/
+			if (!m_EventNewTask.WaitEvent())/**< 没有新任务信号*/
 				continue;
 		}
 

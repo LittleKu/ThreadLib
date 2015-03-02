@@ -1,7 +1,24 @@
 // demo.cpp : 定义控制台应用程序的入口点。
 //
 
-#include "stdafx.h"
+#include <stdio.h>
+#include <assert.h>
+#include <map>
+#include <vector>
+
+
+#include "CodeAddress.h"
+#include "ThreadPool.h"
+
+#ifdef WIN32
+#ifdef _DEBUG
+#pragma comment(lib, "../lib/ThreadLib_d.lib")
+#else
+#pragma comment(lib, "../lib/ThreadLib.lib")
+#endif
+#else
+#include <unistd.h>
+#endif
 
 class CTest
 {
@@ -9,6 +26,8 @@ public:
 	CTest()
 		:m_Thread(NULL)
 		,m_bStop(false)
+		,m_nThreadParam(5)
+		,m_nThreadPoolParam(10)
 	{
 	}
 
@@ -23,22 +42,30 @@ public:
 
 	void *ThreadFunc(void* param)
 	{
-		char *str = (char*)param;
+		int *pNum = (int*)param;
 		while (!m_bStop)
 		{
-			printf("\n\tthe param is a string : \"%s\"\n", str);
+			printf("\n\tthe param is a number : \"%i\"\n", *pNum);
+#ifdef WIN32
 			Sleep(500);
+#else
+			usleep(500*1000);
+#endif
 		}
 		return NULL;
 	}
 
 	void *ThreadPoolFunc(void* pParam)
 	{
-		char *str = (char*)pParam;
+		int *pNum = (int*)pParam;
 		while (!m_bStop)
 		{
-			printf("\n\tThreadPoolFunc string : \"%s\"\n", str);
+			printf("\n\tThreadPoolFunc Number is : \"%i\"\n", *pNum);
+#ifdef WIN32
 			Sleep(500);
+#else
+			usleep(500*1000);
+#endif
 		}
 		return NULL;
 	}
@@ -47,16 +74,16 @@ public:
 	{
 		if (m_Thread == NULL)
 		{
-			char *param = "test";
+			int *param = &m_nThreadParam;
 
 			m_Thread = new ThreadLib::Thread();
-			m_Thread->Run(GET_MEMBER_CODE(CTest::ThreadFunc), (DWORD)this, (DWORD)param);
+			m_Thread->Run((DWORD)GET_MEMBER_CALLBACK(CTest,ThreadFunc), (DWORD)this, (DWORD)param);
 		}
 
-		char *pool = "this is thread pool running";
+		int *pool = &m_nThreadPoolParam;
 
 		for (int i = 0; i < 2; i++)
-			m_ThreadPool.PushTask(GET_MEMBER_CODE(CTest::ThreadPoolFunc), (DWORD)this, (DWORD)pool);
+			m_ThreadPool.PushTask((DWORD)GET_MEMBER_CALLBACK(CTest,ThreadPoolFunc), (DWORD)this, (DWORD)pool);
 
 		m_ThreadPool.Start(2);
 	}
@@ -70,17 +97,13 @@ public:
 	ThreadLib::Thread *m_Thread;
 	ThreadLib::ThreadPool m_ThreadPool;
 	bool m_bStop;
+	int	m_nThreadParam;
+	int	m_nThreadPoolParam;
 };
 
 
-int _tmain(int argc, _TCHAR* argv[])
+int main(int argc, char* argv[])
 {
-#if defined(_DEBUG)
-	_CrtSetDbgFlag(_CRTDBG_LEAK_CHECK_DF | _CRTDBG_ALLOC_MEM_DF);
-	_CrtSetReportMode(_CRT_ASSERT, _CRTDBG_MODE_FILE);
-	_CrtSetReportFile(_CRT_ASSERT, _CRTDBG_FILE_STDERR);
-#endif
-
 	CTest a;
 	a.StartTest();
 	getchar();

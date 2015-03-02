@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "Task.h"
 
 namespace ThreadLib
@@ -14,14 +13,14 @@ namespace ThreadLib
 	{
 	}
 
-	void Task::PushTask(DWORD pfn, DWORD pClassBase, DWORD pParam)
+	void Task::PushTask(unsigned long pfn, unsigned long pClassBase, unsigned long pParam)
 	{
 		m_pfn = pfn;
 		m_pClassBase = pClassBase;
 		m_pParam = pParam;
 	}
 
-	void Task::PushTask(DWORD pfn, DWORD pParam)
+	void Task::PushTask(unsigned long pfn, unsigned long pParam)
 	{
 		m_pfn = pfn;
 		m_pClassBase = NULL;
@@ -35,7 +34,11 @@ namespace ThreadLib
 
 		if (m_pClassBase != NULL)
 		{
+#ifdef WIN32
 			return reinterpret_cast<void *(__fastcall *)(void *, int, void*)>(m_pfn)((void*)m_pClassBase, 0, (void*)m_pParam);
+#else
+			return reinterpret_cast<void *(*)(void *, void*)>(m_pfn)((void*)m_pClassBase, (void*)m_pParam);
+#endif
 		}
 		else
 		{
