@@ -7,6 +7,21 @@
 
 namespace ThreadLib
 {
+#ifdef WIN32
+	inline void *GetCodeAddr(...)
+	{
+		DWORD address;
+
+		__asm
+		{
+			lea eax,address
+			mov edx, [ebp + 8]
+			mov [eax], edx
+		}
+
+		return (void *)address;
+	}
+#else
 	class GenericClass {};
 	typedef void (GenericClass::*VoidFunc)();
 
@@ -14,9 +29,14 @@ namespace ThreadLib
 	{
 		return *(void **)&mfp;
 	}
+#endif
 }
 
+#ifdef WIN32
+#define GetCodeAddress(mfp)	ThreadLib::GetCodeAddr(mfp)
+#else
 #define GetCodeAddress(mfp)	ThreadLib::GetCodeAddr(reinterpret_cast<ThreadLib::VoidFunc>(mfp))
+#endif
 
 #define GET_MEMBER_CALLBACK(classname, name)	(void*)GetCodeAddress(&classname::name)
 #define GET_STATIC_CALLBACK(name)	(void*)&name
