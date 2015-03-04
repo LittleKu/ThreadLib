@@ -1,13 +1,14 @@
 #ifndef __CODE_ADDRESS_H__
 #define __CODE_ADDRESS_H__
 
-/**
- *	来自Sourcemod框架,了解更多请点击:https://github.com/alliedmodders/sourcemod
- */
+
 
 namespace ThreadLib
 {
 #ifdef WIN32
+	/**
+	 *	来自Nagist的Metahook
+	 */
 	inline void *GetCodeAddr(...)
 	{
 		DWORD address;
@@ -22,6 +23,9 @@ namespace ThreadLib
 		return (void *)address;
 	}
 #else
+	/**
+	 *	来自Sourcemod框架,了解更多请点击:https://github.com/alliedmodders/sourcemod
+	 */
 	class GenericClass {};
 	typedef void (GenericClass::*VoidFunc)();
 
