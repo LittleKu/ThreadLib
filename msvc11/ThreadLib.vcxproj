@@ -16,6 +16,7 @@
     <ClInclude Include="..\Include\Interlock.h" />
     <ClInclude Include="..\Include\MemPool.h" />
     <ClInclude Include="..\Include\Mutex.h" />
+    <ClInclude Include="..\Include\Semaphore.h" />
     <ClInclude Include="..\Include\Task.h" />
     <ClInclude Include="..\Include\Thread.h" />
     <ClInclude Include="..\Include\ThreadPool.h" />
@@ -25,6 +26,7 @@
     <ClCompile Include="..\Source\InterLock.cpp" />
     <ClCompile Include="..\Source\MemPool.cpp" />
     <ClCompile Include="..\Source\Mutex.cpp" />
+    <ClCompile Include="..\Source\Semaphore.cpp" />
     <ClCompile Include="..\Source\Task.cpp" />
     <ClCompile Include="..\SOurce\Thread.cpp" />
     <ClCompile Include="..\Source\ThreadPool.cpp" />
