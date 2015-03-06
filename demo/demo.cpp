@@ -7,10 +7,9 @@
 #include <vector>
 
 
-#include "CodeAddress.h"
-#include "ThreadPool.h"
 
 #ifdef WIN32
+#include <Windows.h>
 #ifdef _DEBUG
 #pragma comment(lib, "../lib/ThreadLib_d.lib")
 #else
@@ -19,6 +18,9 @@
 #else
 #include <unistd.h>
 #endif
+
+#include "CodeAddress.h"
+#include "ThreadPool.h"
 
 class CTest
 {
@@ -43,14 +45,17 @@ public:
 	void *ThreadFunc(void* param)
 	{
 		int *pNum = (int*)param;
-		while (!m_bStop)
+
+		while (true)
 		{
-			printf("\n\tthe param is a number : \"%i\"\n", *pNum);
-#ifdef WIN32
-			Sleep(500);
-#else
-			usleep(500*1000);
-#endif
+			bool bRet = m_Event.WaitEvent(1000);
+			if (bRet)
+			{
+				printf("\n\t thread func break\n");
+				break;
+			}else{
+				printf("\n\tthe param is a number : \"%i\"\n", *pNum);
+			}
 		}
 		return NULL;
 	}
@@ -58,15 +63,11 @@ public:
 	void *ThreadPoolFunc(void* pParam)
 	{
 		int *pNum = (int*)pParam;
-		while (!m_bStop)
+
 		{
 			printf("\n\tThreadPoolFunc Number is : \"%i\"\n", *pNum);
-#ifdef WIN32
-			Sleep(500);
-#else
-			usleep(500*1000);
-#endif
 		}
+
 		return NULL;
 	}
 
@@ -91,11 +92,13 @@ public:
 	void StopTest()
 	{
 		m_bStop = true;
+		m_Event.Set();
 		m_ThreadPool.Stop();
 	}
 
 	ThreadLib::Thread *m_Thread;
 	ThreadLib::ThreadPool m_ThreadPool;
+	ThreadLib::Event	m_Event;
 	bool m_bStop;
 	int	m_nThreadParam;
 	int	m_nThreadPoolParam;
@@ -109,6 +112,7 @@ int main(int argc, char* argv[])
 	getchar();
 	a.StopTest();
 
+	getchar();
 	return 0;
 }
 
