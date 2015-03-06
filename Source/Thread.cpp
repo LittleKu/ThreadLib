@@ -58,7 +58,6 @@ namespace ThreadLib
 	bool Thread::_Run()
 	{
 #ifdef WIN32
-		assert(m_hThread == NULL);
 		m_hThread = (HANDLE)::_beginthreadex(NULL, 0, &Thread::ThreadProc, (void*)this, 0, (unsigned int*)&m_dwThreadID);
 		if (m_hThread == NULL)
 			return false;
