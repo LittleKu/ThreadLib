@@ -40,7 +40,7 @@ namespace ThreadLib
 		bool bRet = true;
 #ifdef WIN32
 		DWORD dwObj = ::WaitForSingleObject(m_hHandler, lMillSecond);
-		if (dwObj == WAIT_TIMEOUT || (dwObj  <= WAIT_ABANDONED_0 && dwObj <= WAIT_ABANDONED_0 + 1))
+		if (dwObj == WAIT_TIMEOUT || (WAIT_ABANDONED_0 <= dwObj && dwObj <= WAIT_ABANDONED_0 + 1))
 			bRet = false;
 #else
 		__sync_fetch_and_add((unsigned int*)&m_nWaitCount, 1);
