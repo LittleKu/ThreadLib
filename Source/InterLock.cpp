@@ -13,6 +13,7 @@ namespace ThreadLib
 
 	long InterLockDecre(void *var, long value)
 	{
+		value = value * -1;
 #ifdef WIN32
 		return ::InterlockedExchangeAdd((long*)var, value);
 #else
