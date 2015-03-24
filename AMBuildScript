@@ -1,0 +1,128 @@
+# vim: set sts=2 ts=8 sw=2 tw=99 et ft=python:
+import os
+import sys
+
+cfg = builder.DetectCompilers()
+cxx = cfg.cxx
+name = 'ThreadLib'
+
+if cxx.behavior is 'gcc':
+	cfg.cflags += [
+		'-pipe',
+		'-Wall',
+		'-Werror',
+		'-Wno-switch',
+		'-msse',
+	]
+	have_gcc = cxx.name is 'gcc'
+	have_clang = cxx.name is 'clang'
+	if have_clang:
+		cfg.cxxflags += ['-Wno-unused-private-field']
+	if have_clang or (have_gcc and cxx.majorVersion >= 4):
+		cfg.cflags += ['-fvisibility=hidden']
+		cfg.cxxflags += ['-fvisibility-inlines-hidden']
+		if have_clang or (have_gcc and cxx.minorVersion >= 6):
+			cfg.cflags += ['-Wno-narrowing']
+		if (have_gcc and cxx.minorVersion >= 7) or (have_clang and cxx.majorVersion >= 4):
+			cfg.cxxflags += ['-Wno-delete-non-virtual-dtor']
+
+	cfg.cxxflags += [
+		'-fno-exceptions',
+		'-fno-rtti',
+		'-fno-threadsafe-statics',
+		'-Wno-non-virtual-dtor',
+		'-Wno-overloaded-virtual',
+	]
+	if have_gcc:
+		cfg.cflags += ['-mfpmath=sse']
+
+	if (have_gcc and cxx.majorVersion >= 4 and cxx.minorVersion >= 7) or (have_clang and cxx.majorVersion >= 3):
+		cfg.cxxflags += ['-Wno-delete-non-virtual-dtor']
+
+	cfg.postlink += ['-lm']
+elif cxx.name is 'msvc':
+	if builder.options.debug == '1':
+		cfg.cflags += ['/MTd']
+		cfg.linkflags += ['/NODEFAULTLIB:libcmt']
+	else:
+		cfg.cflags += ['/MT']
+	cfg.defines += [
+		'_CRT_SECURE_NO_DEPRECATE',
+		'_CRT_SECURE_NO_WARNINGS',
+		'_CRT_NONSTDC_NO_DEPRECATE',
+		'_ITERATOR_DEBUG_LEVEL=0',
+	]
+	cfg.cflags += [
+		'/W3',
+	]
+	cfg.cxxflags += [
+		'/EHsc',
+		'/GR-',
+		'/TP',
+	]
+	cfg.linkflags += [
+		'/MACHINE:X86',
+		'kernel32.lib',
+		'user32.lib',
+		'gdi32.lib',
+		'winspool.lib',
+		'comdlg32.lib',
+		'advapi32.lib',
+		'shell32.lib',
+		'ole32.lib',
+		'oleaut32.lib',
+		'uuid.lib',
+		'odbc32.lib',
+		'odbccp32.lib',
+	] 
+
+if builder.options.opt == '1':
+	cfg.defines += ['NDEBUG']
+	if cxx.behavior == 'gcc':
+		cfg.cflags += ['-O3']
+	elif cxx.behavior == 'msvc':
+		cfg.cflags += ['/Ox']
+		cfg.linkflags += ['/OPT:ICF', '/OPT:REF']
+
+if builder.options.debug == '1':
+	cfg.defines += ['DEBUG', '_DEBUG']
+	if cxx.behavior == 'msvc':
+		cfg.cflags += ['/Od', '/RTC1']
+
+if cxx.name == 'msvc':
+	cfg.cflags += ['/Oy-']
+
+if builder.target_platform == 'linux':
+	if cxx.name == 'gcc':
+		cfg.postlink += ['-static-libgcc']
+	elif cxx.name == 'clang':
+		cfg.postlink += ['-lgcc_eh']
+	cfg.postlink += ['-lpthread', '-lrt']
+elif builder.target_platform == 'mac':
+	cfg.linkflags += [
+		'-mmacosx-version-min=10.5',
+	]
+elif builder.target_platform == 'windows':
+	cfg.defines += ['WIN32', '_WINDOWS']
+
+cfg.cxxincludes += [
+	os.path.join(builder.currentSourcePath, 'Include'),
+	]
+
+if builder.options.debug == '1':
+	name = name + '_d'
+
+slibrary = builder.compiler.StaticLibrary(name)
+
+slibrary.sources += [
+	'Source/Event.cpp',
+	'Source/InterLock.cpp',
+	'Source/MemPool.cpp',
+	'Source/Mutex.cpp',
+	'Source/Semaphore.cpp',
+	'Source/Task.cpp',
+	'Source/Thread.cpp',
+	'Source/ThreadPool.cpp',
+]
+
+builder.Add(slibrary)
