@@ -27,7 +27,7 @@ if cxx.behavior is 'gcc':
 			cfg.cxxflags += ['-Wno-delete-non-virtual-dtor']
 
 	cfg.cxxflags += [
-		'-fno-exceptions',
+		'-Wno-strict-aliasing',
 		'-fno-rtti',
 		'-fno-threadsafe-statics',
 		'-Wno-non-virtual-dtor',
