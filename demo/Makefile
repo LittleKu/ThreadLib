@@ -43,7 +43,7 @@ INCLUDE = -I. -I$(HEADER_DIR)
 LIB = -lnsl -lc -lm -pthread -lstdc++ 
 
 #静态库：.a文件路径名
-LIB += $(LIB_HOME)/lib/ThreadLib.a 
+#LIB += $(LIB_HOME)/lib/ThreadLib.a 
 
 #------------------------------------------编译选项End--------------------------------------------------------
 

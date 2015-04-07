@@ -21,16 +21,6 @@
     <ClInclude Include="..\Include\Thread.h" />
     <ClInclude Include="..\Include\ThreadPool.h" />
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\Source\Event.cpp" />
-    <ClCompile Include="..\Source\InterLock.cpp" />
-    <ClCompile Include="..\Source\MemPool.cpp" />
-    <ClCompile Include="..\Source\Mutex.cpp" />
-    <ClCompile Include="..\Source\Semaphore.cpp" />
-    <ClCompile Include="..\Source\Task.cpp" />
-    <ClCompile Include="..\SOurce\Thread.cpp" />
-    <ClCompile Include="..\Source\ThreadPool.cpp" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{9A4429F5-18B9-4377-8C7E-B283E64BABA3}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
@@ -39,7 +29,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Utility</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v110</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>

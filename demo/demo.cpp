@@ -10,11 +10,6 @@
 
 #ifdef WIN32
 #include <Windows.h>
-#ifdef _DEBUG
-#pragma comment(lib, "../lib/ThreadLib_d.lib")
-#else
-#pragma comment(lib, "../lib/ThreadLib.lib")
-#endif
 #else
 #include <unistd.h>
 #endif
