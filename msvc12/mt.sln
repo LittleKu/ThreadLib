@@ -1,9 +1,9 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ThreadLib", "ThreadLib.vcxproj", "{9A4429F5-18B9-4377-8C7E-B283E64BABA3}"
-EndProject
+Microsoft Visual Studio Solution File, Format Version 13.00
+# Visual Studio 2013
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "demo", "..\demo\demo.vcxproj", "{10EF0DCF-6339-4804-A987-7F69DD0A2F86}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mt", "mt.vcxproj", "{9A4429F5-18B9-4377-8C7E-B283E64BABA3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

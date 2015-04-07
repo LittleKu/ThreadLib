@@ -7,7 +7,7 @@
 #include <pthread.h>
 #endif
 
-namespace ThreadLib
+namespace mt
 {
 	class Mutex
 	{

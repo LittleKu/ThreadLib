@@ -72,7 +72,7 @@ public:
 		{
 			int *param = &m_nThreadParam;
 
-			m_Thread = new ThreadLib::Thread();
+			m_Thread = new mt::Thread();
 			m_Thread->Run((DWORD)GET_MEMBER_CALLBACK(CTest,ThreadFunc), (DWORD)this, (DWORD)param);
 		}
 
@@ -91,9 +91,9 @@ public:
 		m_ThreadPool.Stop();
 	}
 
-	ThreadLib::Thread *m_Thread;
-	ThreadLib::ThreadPool m_ThreadPool;
-	ThreadLib::Event	m_Event;
+	mt::Thread *m_Thread;
+	mt::ThreadPool m_ThreadPool;
+	mt::Event	m_Event;
 	bool m_bStop;
 	int	m_nThreadParam;
 	int	m_nThreadPoolParam;

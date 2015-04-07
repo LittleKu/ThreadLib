@@ -25,7 +25,7 @@
     <ProjectGuid>{9A4429F5-18B9-4377-8C7E-B283E64BABA3}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>MultiThread</RootNamespace>
-    <ProjectName>ThreadLib</ProjectName>
+    <ProjectName>MultiThread</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

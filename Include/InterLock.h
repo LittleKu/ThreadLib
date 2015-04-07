@@ -5,7 +5,7 @@
 #include <Windows.h>
 #endif
 
-namespace ThreadLib
+namespace mt
 {
 	long InterLockIncre(void *var, long value)
 	{

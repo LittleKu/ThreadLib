@@ -3,7 +3,7 @@
 
 
 
-namespace ThreadLib
+namespace mt
 {
 #ifdef WIN32
 	/**
@@ -37,9 +37,9 @@ namespace ThreadLib
 }
 
 #ifdef WIN32
-#define GetCodeAddress(mfp)	ThreadLib::GetCodeAddr(mfp)
+#define GetCodeAddress(mfp)	mt::GetCodeAddr(mfp)
 #else
-#define GetCodeAddress(mfp)	ThreadLib::GetCodeAddr(reinterpret_cast<ThreadLib::VoidFunc>(mfp))
+#define GetCodeAddress(mfp)	mt::GetCodeAddr(reinterpret_cast<mt::VoidFunc>(mfp))
 #endif
 
 #define GET_MEMBER_CALLBACK(classname, name)	(void*)GetCodeAddress(&classname::name)

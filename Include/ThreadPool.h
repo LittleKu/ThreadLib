@@ -12,7 +12,7 @@
 
 #include <stddef.h>
 
-namespace ThreadLib
+namespace mt
 {
 	class MemPool;
 
