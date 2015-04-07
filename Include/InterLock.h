@@ -7,7 +7,7 @@
 
 namespace ThreadLib
 {
-	long InterLockIncre(void *var, long value)
+	inline long InterLockIncre(void *var, long value)
 	{
 #ifdef WIN32
 		return ::InterlockedExchangeAdd((long*)var, value);
@@ -16,7 +16,7 @@ namespace ThreadLib
 #endif
 	}
 
-	long InterLockDecre(void *var, long value)
+	inline long InterLockDecre(void *var, long value)
 	{
 		value = value * -1;
 #ifdef WIN32
