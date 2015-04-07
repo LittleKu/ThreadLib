@@ -13,7 +13,7 @@
 typedef unsigned long DWORD;
 #endif
 
-namespace ThreadLib
+namespace mt
 {
 
 #ifdef WIN32

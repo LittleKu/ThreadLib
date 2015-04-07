@@ -8,7 +8,7 @@
 #include <semaphore.h>
 #endif
 
-namespace ThreadLib
+namespace mt
 {
 	class Event
 	{

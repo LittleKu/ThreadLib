@@ -7,7 +7,7 @@
 /**< 每一块内存的头部信息*/
 #define MEMORY_HEADER	8
 
-namespace ThreadLib
+namespace mt
 {
 	class MemPool
 	{

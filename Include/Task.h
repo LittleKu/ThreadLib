@@ -5,7 +5,7 @@
 #define NULL	0
 #endif
 
-namespace ThreadLib
+namespace mt
 {
 	class Task
 	{
